@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Страница не найдена | VOLTEX</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Шрифты Playfair Display и Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --neon-main: #FF5E14;
+            --neon-rgb: 255, 94, 20;
+            --neon-core: #FFE6D6;
+            --accent-main: #FF5E14;
+            --accent-rgb: 255, 94, 20;
+            --brightness-factor: 1;
+            --master-power: 1;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            background-color: #08090B;
+            color: #F3F4F6;
+            overflow-x: hidden;
+            selection-background-color: rgba(var(--accent-rgb), 0.32);
+        }
+
+        /* Утонченный матовый графитовый фон с мягким светом от неона на стене */
+        .graphite-stage {
+            background-color: #08090B;
+            background-image:
+                radial-gradient(
+                    ellipse 62% 52% at 64% 40%,
+                    rgba(var(--neon-rgb), calc(0.16 * var(--brightness-factor) * var(--master-power))) 0%,
+                    rgba(var(--neon-rgb), calc(0.05 * var(--brightness-factor) * var(--master-power))) 42%,
+                    rgba(8, 9, 11, 0) 74%
+                ),
+                radial-gradient(
+                    circle at 18% 14%,
+                    rgba(255, 255, 255, 0.022) 0%,
+                    transparent 42%
+                ),
+                linear-gradient(180deg, #07080A 0%, #0B0D10 52%, #07080A 100%);
+            transition: background 0.3s ease;
+        }
+
+        /* Деликатное зерно поверхности */
+        .film-grain {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.028;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.7) 0.55px, transparent 0.55px);
+            background-size: 4px 4px;
+        }
+
+        /* Сдержанный фоновый водяной знак для глубины сцены */
+        .ghost-typography {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: rgba(255, 255, 255, 0.016);
+            text-shadow: 0 0 95px rgba(var(--neon-rgb), calc(0.1 * var(--brightness-factor) * var(--master-power)));
+            user-select: none;
+            pointer-events: none;
+        }
+
+        /* Плавный микро-маятник подвесной вывески */
+        @keyframes subtleHang {
+            0%, 100% {
+                transform: rotate(-0.45deg);
+            }
+            50% {
+                transform: rotate(0.45deg);
+            }
+        }
+
+        .sign-assembly {
+            transform-origin: 50% 0%;
+            animation: subtleHang 9s ease-in-out infinite;
+        }
+
+        /* Многослойное неоновое свечение стеклянных трубок */
+        .neon-tube-glow {
+            filter:
+                drop-shadow(0 0 calc(2.5px * var(--brightness-factor) * var(--master-power)) var(--neon-core))
+                drop-shadow(0 0 calc(7px * var(--brightness-factor) * var(--master-power)) var(--neon-main))
+                drop-shadow(0 0 calc(18px * var(--brightness-factor) * var(--master-power)) rgba(var(--neon-rgb), 0.88))
+                drop-shadow(0 0 calc(40px * var(--brightness-factor) * var(--master-power)) rgba(var(--neon-rgb), 0.56))
+                drop-shadow(0 0 calc(72px * var(--brightness-factor) * var(--master-power)) rgba(var(--neon-rgb), 0.26));
+            transition: filter 0.16s ease-out;
+        }
+
+        /* Реалистичное мерцание газоразрядной трубки */
+        @keyframes neonMicroFlicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                opacity: var(--digit-target-opacity, 1);
+            }
+            20%, 24% {
+                opacity: calc(var(--digit-target-opacity, 1) * 0.74);
+            }
+            22% {
+                opacity: calc(var(--digit-target-opacity, 1) * 0.91);
+            }
+            55% {
+                opacity: calc(var(--digit-target-opacity, 1) * 0.84);
+            }
+        }
+
+        .neon-flicker-loop {
+            animation: neonMicroFlicker 6.8s infinite;
+        }
+
+        .digit-hit-area {
+            cursor: pointer;
+            outline: none;
+            transition: opacity 0.2s ease, filter 0.2s ease;
+        }
+
+        .digit-hit-area:hover {
+            filter: brightness(1.07);
+        }
+
+        .digit-hit-area:focus-visible {
+            filter: brightness(1.1);
+        }
+
+        /* Мягкое рассеянное свечение за вывеской на стене */
+        @keyframes haloPulse {
+            0%, 100% {
+                opacity: calc(0.84 * var(--brightness-factor) * var(--master-power));
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                opacity: calc(0.98 * var(--brightness-factor) * var(--master-power));
+                transform: translate(-50%, -50%) scale(1.025);
+            }
+        }
+
+        .neon-backdrop-halo {
+            position: absolute;
+            left: 50%;
+            top: 52%;
+            width: min(580px, 92vw);
+            height: min(300px, 48vw);
+            border-radius: 9999px;
+            pointer-events: none;
+            background: radial-gradient(
+                ellipse at center,
+                rgba(var(--neon-rgb), 0.3) 0%,
+                rgba(var(--neon-rgb), 0.12) 44%,
+                rgba(var(--neon-rgb), 0.025) 70%,
+                rgba(8, 9, 11, 0) 86%
+            );
+            filter: blur(32px);
+            animation: haloPulse 7s ease-in-out infinite;
+            transition: background 0.3s ease;
+        }
+
+        /* Акцентные элементы, синхронизируемые с выбранным оттенком */
+        .accent-badge {
+            color: var(--accent-main);
+            border-color: rgba(var(--accent-rgb), 0.32);
+            background-color: rgba(var(--accent-rgb), 0.07);
+            transition: all 0.25s ease;
+        }
+
+        .voltex-btn {
+            background-color: var(--accent-main);
+            box-shadow: 0 10px 28px -8px rgba(var(--accent-rgb), 0.55);
+            transition: transform 0.2s ease, box-shadow 0.25s ease, filter 0.2s ease, background-color 0.25s ease;
+        }
+
+        .voltex-btn:hover {
+            transform: translateY(-1.5px);
+            filter: brightness(1.06);
+            box-shadow: 0 14px 34px -8px rgba(var(--accent-rgb), 0.68);
+        }
+
+        .voltex-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Стеклянный контроллер света и цвета с чистой иерархией границ */
+        .regulator-glass {
+            background: linear-gradient(180deg, rgba(18, 21, 27, 0.82) 0%, rgba(12, 14, 18, 0.88) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.085);
+            box-shadow:
+                0 24px 54px -12px rgba(0, 0, 0, 0.75),
+                inset 0 1px 0 rgba(255, 255, 255, 0.065);
+        }
+
+        /* Кастомный ползунок яркости */
+        input[type="range"].neon-dimmer {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            border-radius: 999px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        input[type="range"].neon-dimmer::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: #F9FAFB;
+            border: 3px solid var(--neon-main);
+            box-shadow: 0 0 12px rgba(var(--neon-rgb), 0.82);
+            cursor: pointer;
+            transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        input[type="range"].neon-dimmer::-webkit-slider-thumb:hover {
+            transform: scale(1.14);
+        }
+
+        input[type="range"].neon-dimmer::-moz-range-thumb {
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: #F9FAFB;
+            border: 3px solid var(--neon-main);
+            box-shadow: 0 0 12px rgba(var(--neon-rgb), 0.82);
+            cursor: pointer;
+        }
+
+        .custom-color-trigger input[type="color"] {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .toggle-chip {
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+    </style>
+</head>
+<body class="graphite-stage min-h-screen flex flex-col justify-between antialiased selection:text-white">
+    <div class="film-grain" aria-hidden="true"></div>
+
+    <!-- Сдержанный фоновый водяной знак -->
+    <div aria-hidden="true" class="ghost-typography fixed inset-x-0 top-[15%] text-center text-[104px] sm:text-[172px] lg:text-[232px] leading-none z-0">
+        ERROR
+    </div>
+
+    <!-- Верхняя строка: бренд VOLTEX и переключатель языка RU / EN -->
+    <header class="relative z-20 w-full max-w-6xl mx-auto px-5 sm:px-8 pt-6 pb-2 flex items-center justify-between">
+        <a href="index.html" class="inline-flex items-center gap-2.5 text-xs font-semibold tracking-[0.22em] uppercase text-gray-400 hover:text-white transition-colors">
+            <span class="w-2 h-2 rounded-full" style="background-color: var(--accent-main);"></span>
+            <span>VOLTEX</span>
+        </a>
+
+        <button
+            id="langSwitchBtn"
+            type="button"
+            aria-label="Переключить язык / Switch language"
+            class="px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase text-gray-300 hover:text-white bg-white/[0.035] hover:bg-white/[0.08] border border-white/[0.09] transition-colors cursor-pointer"
+        >
+            RU / EN
+        </button>
+    </header>
+
+    <!-- Центральный блок: лаконичная типографика 404 и подвесная неоновая вывеска -->
+    <main class="relative z-10 flex-1 w-full max-w-6xl mx-auto px-5 sm:px-8 py-6 sm:py-10 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-12">
+
+        <!-- Текстовый блок ошибки 404 -->
+        <section class="w-full lg:w-[44%] text-center lg:text-left space-y-5">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border text-[11px] font-mono font-semibold tracking-[0.2em] uppercase accent-badge">
+                <span class="w-1.5 h-1.5 rounded-full" style="background-color: var(--accent-main);"></span>
+                <span>404</span>
+            </div>
+
+            <div class="space-y-3">
+                <h1 id="errorTitle" class="font-serif text-3xl sm:text-4xl lg:text-[48px] font-semibold text-white tracking-tight leading-[1.1]">
+                    Страница не найдена
+                </h1>
+
+                <p id="errorMessage" class="text-sm sm:text-[15px] text-gray-400 leading-relaxed max-w-md mx-auto lg:mx-0">
+                    Похоже, эта цепь разомкнута или запрошенный адрес больше не существует.
+                </p>
+            </div>
+
+            <p id="digitsHint" class="text-xs text-gray-500/90 leading-relaxed">
+                Нажмите на цифры 4, 0 или 4, чтобы проверить трубки вывески.
+            </p>
+
+            <div class="pt-1">
+                <a
+                    id="homeBtn"
+                    href="index.html"
+                    class="voltex-btn inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full text-sm font-medium text-white"
+                >
+                    <span id="homeBtnText">На главную</span>
+                    <span aria-hidden="true">→</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Подвесная неоновая вывеска «404» -->
+        <section class="w-full lg:w-[56%] flex flex-col items-center justify-center">
+            <div class="sign-assembly relative flex flex-col items-center select-none w-full max-w-[540px]">
+
+                <!-- Рассеянный ореол света на стене -->
+                <div class="neon-backdrop-halo" aria-hidden="true"></div>
+
+                <svg
+                    class="relative z-10 w-[296px] sm:w-[430px] md:w-[516px] h-auto overflow-visible"
+                    viewBox="0 0 560 270"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    role="img"
+                    aria-label="404"
+                >
+                    <defs>
+                        <!-- Металлический градиент рамы и креплений -->
+                        <linearGradient id="metalBarGrad" x1="110" y1="36" x2="450" y2="36" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#13171C"/>
+                            <stop offset="25%" stop-color="#2A303A"/>
+                            <stop offset="50%" stop-color="#1A1F26"/>
+                            <stop offset="78%" stop-color="#0D1014"/>
+                            <stop offset="100%" stop-color="#1E242C"/>
+                        </linearGradient>
+
+                        <!-- Объем кабеля питания -->
+                        <linearGradient id="powerCordGrad" x1="276" y1="0" x2="284" y2="0" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#000000" stop-opacity="0.42"/>
+                            <stop offset="42%" stop-color="#FFFFFF" stop-opacity="0.24"/>
+                            <stop offset="100%" stop-color="#000000" stop-opacity="0.46"/>
+                        </linearGradient>
+                    </defs>
+
+                    <!-- Центральный кабель питания -->
+                    <rect id="signCordColor" x="276.5" y="-60" width="7" height="102" fill="#FF5E14"/>
+                    <rect x="276.5" y="-60" width="7" height="102" fill="url(#powerCordGrad)"/>
+
+                    <!-- Боковые подвесные тросы -->
+                    <line x1="145" y1="-60" x2="145" y2="42" stroke="#1E232B" stroke-width="2.2"/>
+                    <line x1="415" y1="-60" x2="415" y2="42" stroke="#1E232B" stroke-width="2.2"/>
+
+                    <!-- Горизонтальная металлическая рейка вывески -->
+                    <rect x="115" y="40" width="330" height="8" rx="4" fill="url(#metalBarGrad)" stroke="#2C333E" stroke-width="0.9"/>
+
+                    <!-- Изоляторы и стойки крепления стеклянных трубок -->
+                    <line x1="158" y1="48" x2="158" y2="86" stroke="#232932" stroke-width="1.9"/>
+                    <rect x="154" y="82" width="8" height="6" rx="1.5" fill="#323944"/>
+                    <line x1="126" y1="48" x2="126" y2="168" stroke="#191D23" stroke-width="1.5"/>
+
+                    <line x1="280" y1="48" x2="280" y2="82" stroke="#232932" stroke-width="1.9"/>
+                    <rect x="276" y="78" width="8" height="6" rx="1.5" fill="#323944"/>
+                    <line x1="280" y1="226" x2="280" y2="246" stroke="#191D23" stroke-width="1.5"/>
+
+                    <line x1="434" y1="48" x2="434" y2="86" stroke="#232932" stroke-width="1.9"/>
+                    <rect x="430" y="82" width="8" height="6" rx="1.5" fill="#323944"/>
+                    <line x1="402" y1="48" x2="402" y2="168" stroke="#191D23" stroke-width="1.5"/>
+
+                    <!-- Стеклянная оболочка трубок (различима даже в выключенном состоянии) -->
+                    <g stroke="rgba(255,255,255,0.085)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+                        <path d="M168 228 V86 L108 172 H186"/>
+                        <rect x="228" y="84" width="104" height="146" rx="52"/>
+                        <path d="M444 228 V86 L384 172 H462"/>
+                    </g>
+
+                    <!-- СВЕТЯЩИЕСЯ НЕОНОВЫЕ ТРУБКИ «404» -->
+                    <g id="neonSignGroup" class="neon-tube-glow neon-flicker-loop">
+
+                        <!-- Цифра 1: «4» -->
+                        <g id="digit0" class="digit-hit-area" onclick="toggleDigit(0)" role="button" tabindex="0" aria-label="Toggle digit 4">
+                            <path class="tube-outer" d="M168 228 V86 L108 172 H186" stroke="#FF5E14" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <path class="tube-core" d="M168 228 V86 L108 172 H186" stroke="#FFE6D6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <path d="M168 228 V86 L108 172 H186" stroke="transparent" stroke-width="24" fill="none"/>
+                        </g>
+
+                        <!-- Цифра 2: «0» -->
+                        <g id="digit1" class="digit-hit-area" onclick="toggleDigit(1)" role="button" tabindex="0" aria-label="Toggle digit 0">
+                            <rect class="tube-outer" x="228" y="84" width="104" height="146" rx="52" stroke="#FF5E14" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <rect class="tube-core" x="228" y="84" width="104" height="146" rx="52" stroke="#FFE6D6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <rect x="228" y="84" width="104" height="146" rx="52" stroke="transparent" stroke-width="24" fill="none"/>
+                        </g>
+
+                        <!-- Цифра 3: «4» -->
+                        <g id="digit2" class="digit-hit-area" onclick="toggleDigit(2)" role="button" tabindex="0" aria-label="Toggle digit 4">
+                            <path class="tube-outer" d="M444 228 V86 L384 172 H462" stroke="#FF5E14" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <path class="tube-core" d="M444 228 V86 L384 172 H462" stroke="#FFE6D6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <path d="M444 228 V86 L384 172 H462" stroke="transparent" stroke-width="24" fill="none"/>
+                        </g>
+
+                    </g>
+                </svg>
+            </div>
+        </section>
+    </main>
+
+    <!-- Нижняя строка: подпись VOLTEX и аккуратный регулятор света и цвета -->
+    <footer class="relative z-20 w-full max-w-6xl mx-auto px-5 sm:px-8 pb-6 pt-2 flex flex-col sm:flex-row items-center sm:items-end justify-between gap-4">
+        <div class="text-[11px] tracking-[0.24em] uppercase text-gray-600 select-none order-2 sm:order-1">
+            VOLTEX · ELECTRICAL SOLUTIONS
+        </div>
+
+        <!-- Компактный регулятор яркости и цвета -->
+        <aside aria-label="Neon light and color regulator" class="regulator-glass w-full sm:w-auto sm:min-w-[336px] max-w-md rounded-2xl p-4 order-1 sm:order-2 space-y-3.5">
+            <!-- Диммер яркости 0%–100% -->
+            <div>
+                <div class="flex items-center justify-between text-xs mb-1.5">
+                    <span id="brightnessLabel" class="text-gray-300 font-medium">Яркость</span>
+                    <span id="brightnessReadout" class="font-mono text-[11px] font-semibold text-gray-200 tabular-nums">100%</span>
+                </div>
+                <input id="brightnessSlider" type="range" min="0" max="100" value="100" class="neon-dimmer w-full">
+            </div>
+
+            <!-- Пресеты оттенков + выбор произвольного цвета -->
+            <div class="flex items-center justify-between gap-1.5 flex-wrap pt-0.5">
+                <button type="button" data-color="#FF5E14" class="color-swatch w-6 h-6 rounded-full border-2 border-white scale-110 transition-transform cursor-pointer" style="background-color: #FF5E14;" title="Warm Amber-Orange"></button>
+                <button type="button" data-color="#00E5FF" class="color-swatch w-6 h-6 rounded-full border-2 border-transparent hover:scale-110 transition-transform cursor-pointer" style="background-color: #00E5FF;" title="Electric Cyan"></button>
+                <button type="button" data-color="#FF2A85" class="color-swatch w-6 h-6 rounded-full border-2 border-transparent hover:scale-110 transition-transform cursor-pointer" style="background-color: #FF2A85;" title="Neon Magenta"></button>
+                <button type="button" data-color="#84CC16" class="color-swatch w-6 h-6 rounded-full border-2 border-transparent hover:scale-110 transition-transform cursor-pointer" style="background-color: #84CC16;" title="Lime Green"></button>
+                <button type="button" data-color="#FFF5E4" class="color-swatch w-6 h-6 rounded-full border-2 border-transparent hover:scale-110 transition-transform cursor-pointer" style="background-color: #FFF5E4;" title="Pure Warm White"></button>
+                <button type="button" data-color="#A855F7" class="color-swatch w-6 h-6 rounded-full border-2 border-transparent hover:scale-110 transition-transform cursor-pointer" style="background-color: #A855F7;" title="Violet"></button>
+                <button type="button" data-color="#EF4444" class="color-swatch w-6 h-6 rounded-full border-2 border-transparent hover:scale-110 transition-transform cursor-pointer" style="background-color: #EF4444;" title="Crimson"></button>
+                <button type="button" data-color="#7DD3FC" class="color-swatch w-6 h-6 rounded-full border-2 border-transparent hover:scale-110 transition-transform cursor-pointer" style="background-color: #7DD3FC;" title="Ice Blue"></button>
+
+                <div class="custom-color-trigger relative w-6 h-6 rounded-full border border-white/25 overflow-hidden hover:scale-110 transition-transform flex items-center justify-center shrink-0" style="background: conic-gradient(from 0deg, #ff5e14, #00e5ff, #ff2a85, #84cc16, #a855f7, #7dd3fc, #ff5e14);" title="Custom color">
+                    <span class="w-2 h-2 rounded-full bg-[#08090B] border border-white/75 pointer-events-none"></span>
+                    <input id="customColorInput" type="color" value="#FF5E14" aria-label="Custom neon color">
+                </div>
+            </div>
+
+            <!-- Переключатели мерцания и синхронизации акцента -->
+            <div class="pt-3 border-t border-white/[0.065] flex items-center justify-between gap-2.5 text-[11px] text-gray-300">
+                <label class="toggle-chip inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.07] cursor-pointer select-none">
+                    <input id="flickerToggle" type="checkbox" checked class="accent-[#FF5E14] rounded cursor-pointer">
+                    <span id="flickerLabel">Мерцание</span>
+                </label>
+
+                <label class="toggle-chip inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.07] cursor-pointer select-none">
+                    <input id="syncAccentToggle" type="checkbox" checked class="accent-[#FF5E14] rounded cursor-pointer">
+                    <span id="syncLabel">Синхр. темы</span>
+                </label>
+            </div>
+        </aside>
+    </footer>
+
+    <script>
+        // Переводы RU / EN для автономной страницы 404
+        const translations = {
+            ru: {
+                title: '404 — Страница не найдена | VOLTEX',
+                heading: 'Страница не найдена',
+                message: 'Похоже, эта цепь разомкнута или запрошенный адрес больше не существует.',
+                digitsHint: 'Нажмите на цифры 4, 0 или 4, чтобы проверить трубки вывески.',
+                cta: 'На главную',
+                brightness: 'Яркость',
+                flicker: 'Мерцание',
+                sync: 'Синхр. темы'
+            },
+            en: {
+                title: '404 — Page Not Found | VOLTEX',
+                heading: 'Page Not Found',
+                message: 'It looks like this circuit is open or the requested page no longer exists.',
+                digitsHint: 'Click digits 4, 0, or 4 to toggle individual neon tubes.',
+                cta: 'Go Home',
+                brightness: 'Brightness',
+                flicker: 'Flicker',
+                sync: 'Sync Accent'
+            }
+        };
+
+        const DEFAULT_ORANGE = '#FF5E14';
+
+        const state = {
+            lang: 'ru',
+            brightness: 100,
+            color: '#FF5E14',
+            flicker: true,
+            syncAccent: true,
+            digitsOn: [true, true, true]
+        };
+
+        function hexToRgb(hex) {
+            const clean = hex.replace('#', '');
+            const num = parseInt(clean, 16);
+            return {
+                r: (num >> 16) & 255,
+                g: (num >> 8) & 255,
+                b: num & 255
+            };
+        }
+
+        function blendWithWhite(hex, ratio = 0.78) {
+            const { r, g, b } = hexToRgb(hex);
+            const nr = Math.round(r + (255 - r) * ratio);
+            const ng = Math.round(g + (255 - g) * ratio);
+            const nb = Math.round(b + (255 - b) * ratio);
+            return `rgb(${nr}, ${ng}, ${nb})`;
+        }
+
+        function renderNeonState() {
+            const root = document.documentElement;
+            const rgb = hexToRgb(state.color);
+            const factor = state.brightness / 100;
+            const activeCount = state.digitsOn.filter(Boolean).length;
+            const masterPower = (state.brightness > 0 && activeCount > 0) ? 1 : 0;
+
+            root.style.setProperty('--neon-main', state.color);
+            root.style.setProperty('--neon-rgb', `${rgb.r}, ${rgb.g}, ${rgb.b}`);
+            root.style.setProperty('--neon-core', blendWithWhite(state.color, 0.78));
+            root.style.setProperty('--brightness-factor', factor.toFixed(2));
+            root.style.setProperty('--master-power', masterPower.toString());
+
+            const accentColor = state.syncAccent ? state.color : DEFAULT_ORANGE;
+            const accentRgb = hexToRgb(accentColor);
+            root.style.setProperty('--accent-main', accentColor);
+            root.style.setProperty('--accent-rgb', `${accentRgb.r}, ${accentRgb.g}, ${accentRgb.b}`);
+
+            const cordEl = document.getElementById('signCordColor');
+            if (cordEl) cordEl.setAttribute('fill', state.color);
+
+            const signGroup = document.getElementById('neonSignGroup');
+            if (signGroup) {
+                signGroup.classList.toggle('neon-flicker-loop', state.flicker && factor > 0);
+            }
+
+            const coreStrokeColor = blendWithWhite(state.color, 0.78);
+
+            state.digitsOn.forEach((isOn, idx) => {
+                const digitEl = document.getElementById(`digit${idx}`);
+                if (!digitEl) return;
+
+                const outer = digitEl.querySelector('.tube-outer');
+                const core = digitEl.querySelector('.tube-core');
+                const lit = isOn && factor > 0;
+
+                if (lit) {
+                    outer.setAttribute('stroke', state.color);
+                    core.setAttribute('stroke', coreStrokeColor);
+                    digitEl.style.setProperty('--digit-target-opacity', Math.max(0.22, factor).toFixed(2));
+                    digitEl.style.opacity = Math.max(0.22, factor).toFixed(2);
+                } else {
+                    outer.setAttribute('stroke', '#252A32');
+                    core.setAttribute('stroke', '#323842');
+                    digitEl.style.setProperty('--digit-target-opacity', '0.45');
+                    digitEl.style.opacity = '0.45';
+                }
+            });
+
+            document.getElementById('brightnessReadout').textContent = `${state.brightness}%`;
+
+            const slider = document.getElementById('brightnessSlider');
+            slider.value = state.brightness;
+            slider.style.background = `linear-gradient(to right, ${state.color} 0%, ${state.color} ${state.brightness}%, rgba(255,255,255,0.14) ${state.brightness}%, rgba(255,255,255,0.14) 100%)`;
+
+            document.querySelectorAll('.color-swatch').forEach(btn => {
+                const match = btn.dataset.color.toUpperCase() === state.color.toUpperCase();
+                btn.classList.toggle('border-white', match);
+                btn.classList.toggle('scale-110', match);
+                btn.classList.toggle('border-transparent', !match);
+            });
+        }
+
+        function setNeonColor(hex) {
+            state.color = hex.toUpperCase();
+            if (state.brightness === 0) {
+                state.brightness = 85;
+            }
+            if (!state.digitsOn.some(Boolean)) {
+                state.digitsOn = [true, true, true];
+            }
+            document.getElementById('customColorInput').value = state.color;
+            renderNeonState();
+        }
+
+        function toggleDigit(index) {
+            state.digitsOn[index] = !state.digitsOn[index];
+            if (state.digitsOn[index] && state.brightness === 0) {
+                state.brightness = 85;
+            }
+            renderNeonState();
+        }
+
+        function applyLang() {
+            const t = translations[state.lang];
+            document.documentElement.lang = state.lang;
+            document.title = t.title;
+            document.getElementById('errorTitle').textContent = t.heading;
+            document.getElementById('errorMessage').textContent = t.message;
+            document.getElementById('digitsHint').textContent = t.digitsHint;
+            document.getElementById('homeBtnText').textContent = t.cta;
+            document.getElementById('brightnessLabel').textContent = t.brightness;
+            document.getElementById('flickerLabel').textContent = t.flicker;
+            document.getElementById('syncLabel').textContent = t.sync;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('langSwitchBtn').addEventListener('click', () => {
+                state.lang = state.lang === 'ru' ? 'en' : 'ru';
+                applyLang();
+            });
+
+            document.getElementById('brightnessSlider').addEventListener('input', (e) => {
+                state.brightness = parseInt(e.target.value, 10);
+                renderNeonState();
+            });
+
+            document.querySelectorAll('.color-swatch').forEach(btn => {
+                btn.addEventListener('click', () => setNeonColor(btn.dataset.color));
+            });
+
+            document.getElementById('customColorInput').addEventListener('input', (e) => {
+                setNeonColor(e.target.value);
+            });
+
+            document.getElementById('flickerToggle').addEventListener('change', (e) => {
+                state.flicker = e.target.checked;
+                renderNeonState();
+            });
+
+            document.getElementById('syncAccentToggle').addEventListener('change', (e) => {
+                state.syncAccent = e.target.checked;
+                renderNeonState();
+            });
+
+            [0, 1, 2].forEach(idx => {
+                const el = document.getElementById(`digit${idx}`);
+                el.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleDigit(idx);
+                    }
+                });
+            });
+
+            applyLang();
+            renderNeonState();
+        });
+    </script>
+</body>
+</html>
